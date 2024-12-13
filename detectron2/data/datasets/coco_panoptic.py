@@ -49,6 +49,9 @@ def load_coco_panoptic_json(json_file, image_dir, gt_dir, meta):
         image_file = os.path.join(image_dir, os.path.splitext(ann["file_name"])[0] + ".jpg")
         label_file = os.path.join(gt_dir, ann["file_name"])
         segments_info = [_convert_category_id(x, meta) for x in ann["segments_info"]]
+        if len(segments_info) == 0:
+            # filter out empty ann
+            continue
         ret.append(
             {
                 "file_name": image_file,
